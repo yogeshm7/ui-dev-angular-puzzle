@@ -4,6 +4,7 @@ import {
   addToReadingList,
   clearSearch,
   getAllBooks,
+  isBookFinshed,
   ReadingListBook,
   searchBooks
 } from '@tmo/books/data-access';
@@ -18,7 +19,7 @@ import { Observable } from 'rxjs';
 })
 export class BookSearchComponent implements OnInit {
   books$: Observable<ReadingListBook[]>;
-
+  buttonText = 'Want to Read';
   searchForm = this.fb.group({
     term: ''
   });
@@ -57,5 +58,14 @@ export class BookSearchComponent implements OnInit {
     } else {
       this.store.dispatch(clearSearch());
     }
+  }
+
+  getReadingItemById(id) {
+    this.store.select(isBookFinshed(id)).subscribe(
+      finished => {
+        this.buttonText = finished ? 'Finished' : 'Want to Read'
+      }
+    )
+    return true
   }
 }

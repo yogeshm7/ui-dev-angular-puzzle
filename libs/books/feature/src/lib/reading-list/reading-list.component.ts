@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { Update } from '@ngrx/entity';
 import { Store } from '@ngrx/store';
-import { getReadingList, removeFromReadingList } from '@tmo/books/data-access';
+import { getReadingList, markBookAsFinished, removeFromReadingList } from '@tmo/books/data-access';
 import { ReadingListItem } from '@tmo/shared/models';
 
 @Component({
@@ -15,5 +16,18 @@ export class ReadingListComponent {
 
   removeFromReadingList(item: ReadingListItem) {
     this.store.dispatch(removeFromReadingList({ item }));
+  }
+
+  markAsFinished(item: ReadingListItem) {
+    const updateItem = {
+      finished: true,
+      finishedDate: new Date().toISOString(),
+      ...item
+    }
+    const update: Update<any> = {
+      id: item.bookId,
+      changes: updateItem
+    }
+    this.store.dispatch(markBookAsFinished({ update }));
   }
 }

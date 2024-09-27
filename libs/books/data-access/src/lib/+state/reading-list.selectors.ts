@@ -41,3 +41,8 @@ export const getAllBooks = createSelector<
 export const getReadingList = createSelector(getReadingListState, selectAll);
 
 export const getTotalUnread = createSelector(getReadingListState, selectTotal);
+
+export const isBookFinshed = (id) => createSelector(getReadingList, (items) => {
+  const itemFound = items.find(item => item.bookId === id);
+  return itemFound ? itemFound.finished : false;
+});
