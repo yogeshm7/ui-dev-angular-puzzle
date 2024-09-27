@@ -26,9 +26,15 @@
           </div>
           <p [innerHTML]="b.description"></p>
           <div>
-            <button mat-flat-button color="primary" (click)="addBookToReadingList(b)" [disabled]="b.isAdded">
-              Want to Read
-            </button>
+            <ng-container *ngIf="getReadingItemById(b.id)">
+              <button *ngIf="buttonText == 'Finished'" mat-flat-button color="primary" class="finished-button">
+                {{ buttonText }}
+              </button>
+              <button data-testing="add-book" *ngIf="buttonText == 'Want to Read'" mat-flat-button color="primary"
+                (click)="addBookToReadingList(b)" [disabled]="b.isAdded">
+                {{ buttonText }}
+              </button>
+            </ng-container>
           </div>
         </div>
       </div>
