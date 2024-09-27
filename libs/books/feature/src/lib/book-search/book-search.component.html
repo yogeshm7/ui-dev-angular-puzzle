@@ -26,7 +26,8 @@
           </div>
           <p [innerHTML]="b.description"></p>
           <div>
-            <button mat-flat-button color="primary" (click)="addBookToReadingList(b)" [disabled]="b.isAdded">
+            <button data-testing="add-book" mat-flat-button color="primary" (click)="addBookToReadingList(b)"
+              [disabled]="b.isAdded">
               Want to Read
             </button>
           </div>
